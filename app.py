@@ -34,4 +34,5 @@ if uploaded_file is not None:
         st.write(f"信頼度: {score * 100:.2f}%")
     else:
         st.error(f"【判定結果】 不合格（基準外）")
+
         st.write(f"信頼度: {(1 - score) * 100:.2f}%")
