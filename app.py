@@ -5,7 +5,7 @@ import numpy as np
 
 # パソコン（GitHubのリポジトリ内）にあるモデルを直接読み込む設定
 # 名前が 'meat_quality_model.h5' で一致していることを前提としています
-model = tf.keras.models.load_model('meat_quality_model_light.h5')
+model = tf.keras.models.load_model('meat_quality_model.keras')
 
 st.title("🥩 焼肉・肉質判定アプリ")
 st.write("お肉の写真をアップロードすると、AIが「合格」か「不合格」かを判定します。")
@@ -34,4 +34,5 @@ if uploaded_file is not None:
         st.write(f"信頼度: {score * 100:.2f}%")
     else:
         st.error(f"【判定結果】 不合格（基準外）")
+
         st.write(f"信頼度: {(1 - score) * 100:.2f}%")
