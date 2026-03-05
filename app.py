@@ -7,12 +7,15 @@ import os
 
 # Googleドライブからモデルをダウンロードする関数
 def load_model_from_drive():
-    # スクリーンショットから抜き出した正しいIDです
     file_id = '1xxXyLA_zf2t2sAcWsPPmKzUSpN9I4te'
-    url = f'https://drive.google.com/uc?id={file_id}'
+    # 最新のダウンロード用URL形式に修正しました
+    url = f'https://drive.google.com/uc?export=download&id={file_id}'
     output = 'meat_quality_model.h5'
+    
     if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
+        # fuzzy=Trueを入れることで、URLの解析精度を上げます
+        gdown.download(url, output, quiet=False, fuzzy=True)
+    
     return tf.keras.models.load_model(output)
 
 # モデルの読み込み
@@ -25,8 +28,8 @@ uploaded_file = st.file_uploader("お肉の画像を選択してください..."
 
 if uploaded_file is not None:
     # 画像を表示
-    image = Image.open(uploaded_file)
-    st.image(image, caption='判定中...', use_column_width=True)
+    image = Image.open(uploaded_file).convert('RGB') # 形式を統一
+    st.image(image, caption='判定中...', use_container_width=True)
     
     # AIが読める形に加工
     img = image.resize((224, 224))
@@ -39,7 +42,7 @@ if uploaded_file is not None:
     
     st.divider()
     
-    # 結果表示（0.5を基準に判定）
+    # 結果表示
     if score > 0.5:
         st.success(f"【判定結果】 合格（良質な肉質）")
         st.write(f"信頼度: {score * 100:.2f}%")
