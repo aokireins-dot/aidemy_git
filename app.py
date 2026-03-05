@@ -1,17 +1,14 @@
-
-https://drive.google.com/file/d/1xxXyxLA_zF2t2sAcWsPPmKzUSpN9I4te/view?usp=drive_link
-
-
 import streamlit as st
 import tensorflow as tf
 from PIL import Image
 import numpy as np
-import gdown  # 追加
+import gdown
 import os
 
 # Googleドライブからモデルをダウンロードする関数
 def load_model_from_drive():
-    file_id = '1xxXyxLA_zF2t2sAcWsPPmKzUSpN9I4te'
+    # スクリーンショットから抜き出した正しいIDです
+    file_id = '1xxXyLA_zf2t2sAcWsPPmKzUSpN9I4te'
     url = f'https://drive.google.com/uc?id={file_id}'
     output = 'meat_quality_model.h5'
     if not os.path.exists(output):
@@ -20,16 +17,6 @@ def load_model_from_drive():
 
 # モデルの読み込み
 model = load_model_from_drive()
-
-# --- 以下のコードはそのまま ---
-
-import streamlit as st
-import tensorflow as tf
-from PIL import Image
-import numpy as np
-
-# モデルの読み込み
-model = tf.keras.models.load_model('meat_quality_model.h5')
 
 st.title("🥩 焼肉・肉質判定アプリ")
 st.write("お肉の写真をアップロードすると、AIが「合格」か「不合格」かを判定します。")
@@ -52,7 +39,7 @@ if uploaded_file is not None:
     
     st.divider()
     
-    # 結果表示（Colabでの結果に合わせて調整してください）
+    # 結果表示（0.5を基準に判定）
     if score > 0.5:
         st.success(f"【判定結果】 合格（良質な肉質）")
         st.write(f"信頼度: {score * 100:.2f}%")
