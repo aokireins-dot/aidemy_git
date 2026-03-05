@@ -6,7 +6,7 @@ import numpy as np
 # 最新の.keras形式を読み込む最もシンプルな方法
 @st.cache_resource # モデルを一度読み込んだらメモリに保持して高速化します
 def load_my_model():
-    return tf.keras.models.load_model('final_meat_model.keras')
+    return tf.keras.models.load_model('meat_quality_model.keras')
 
 model = load_my_model()
 
@@ -35,3 +35,4 @@ if uploaded_file is not None:
     else:
         st.error(f"【判定結果】 不合格（基準外）")
         st.write(f"信頼度: {(1 - score) * 100:.2f}%")
+
